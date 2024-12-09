@@ -1,0 +1,9 @@
+Export log
+~~~~~~~~~~
+The core component "Supply Chain_ Inventory. Details" used in the composition "Line_ Trade Delivery. Consignment. Supply Chain_ Inventory" is not an ABIE. Ignoring the composition.
+The core component "Supply Chain_ Inventory. Details" used in the composition "Line_ Trade Delivery. Customer. Supply Chain_ Inventory" is not an ABIE. Ignoring the composition.
+The DT "Date Mandatory_ Date Time. Type" for the BBIE "Referenced_ Document. Issue. Date Time" ("IssueDateTime") was not found in the XML schemas generated.
+The core component "Product Handling_ Process. Details" used in the composition "Trade_ Product Instance. Applied. Product Handling_ Process" is not an ABIE. Ignoring the composition.
+The DT "Date Mandatory_ Date Time. Type" for the BBIE "Trade_ Product. Cancellation_ Announced Launch. Date Time" ("CancellationAnnouncedLaunchDateTime") was not found in the XML schemas generated.
+The DT "Date Mandatory_ Date Time. Type" for the BBIE "Trade_ Product. Latest_ Product Data Change. Date Time" ("LatestProductDataChangeDateTime") was not found in the XML schemas generated.
+Export completed.

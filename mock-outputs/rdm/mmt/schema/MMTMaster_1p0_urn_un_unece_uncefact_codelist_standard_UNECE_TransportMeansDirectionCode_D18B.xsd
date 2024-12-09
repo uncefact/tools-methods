@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:clm68101="urn:un:unece:uncefact:codelist:standard:UNECE:TransportMeansDirectionCode:D18B"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:un:unece:uncefact:codelist:standard:UNECE:TransportMeansDirectionCode:D18B"
+    elementFormDefault="qualified"
+    version="1.1">
+  <xsd:simpleType name="TransportMeansDirectionCodeContentType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="BS"/>
+      <xsd:enumeration value="SB"/>
+      <xsd:enumeration value="SC"/>
+      <xsd:enumeration value="SD"/>
+      <xsd:enumeration value="SF"/>
+      <xsd:enumeration value="SS"/>
+      <xsd:enumeration value="ST"/>
+      <xsd:enumeration value="SU"/>
+      <xsd:enumeration value="ZZZ"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

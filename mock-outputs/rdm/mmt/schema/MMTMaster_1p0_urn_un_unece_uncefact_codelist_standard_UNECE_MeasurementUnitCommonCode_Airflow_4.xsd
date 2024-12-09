@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:clm6Recommendation20Airflow="urn:un:unece:uncefact:codelist:standard:UNECE:MeasurementUnitCommonCode_Airflow:4"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:un:unece:uncefact:codelist:standard:UNECE:MeasurementUnitCommonCode_Airflow:4"
+    elementFormDefault="qualified"
+    version="1.0">
+  <xsd:simpleType name="MeasurementUnitCommonCodeAirflowContentType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="35"/>
+      <xsd:enumeration value="40"/>
+      <xsd:enumeration value="E93"/>
+      <xsd:enumeration value="F26"/>
+      <xsd:enumeration value="F27"/>
+      <xsd:enumeration value="F28"/>
+      <xsd:enumeration value="F29"/>
+      <xsd:enumeration value="F30"/>
+      <xsd:enumeration value="F31"/>
+      <xsd:enumeration value="F32"/>
+      <xsd:enumeration value="F33"/>
+      <xsd:enumeration value="F34"/>
+      <xsd:enumeration value="G50"/>
+      <xsd:enumeration value="G51"/>
+      <xsd:enumeration value="G54"/>
+      <xsd:enumeration value="G55"/>
+      <xsd:enumeration value="GB"/>
+      <xsd:minLength value="1"/>
+      <xsd:maxLength value="3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

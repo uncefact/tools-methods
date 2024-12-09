@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:clm68249a="urn:un:unece:uncefact:codelist:standard:UNECE:TransportEquipmentMovementStatusCode:D18B"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:un:unece:uncefact:codelist:standard:UNECE:TransportEquipmentMovementStatusCode:D18B"
+    elementFormDefault="qualified"
+    version="1.0">
+  <xsd:simpleType name="TransportEquipmentMovementStatusCodeContentType">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="2"/>
+      <xsd:enumeration value="3"/>
+      <xsd:enumeration value="6"/>
+      <xsd:enumeration value="8"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
