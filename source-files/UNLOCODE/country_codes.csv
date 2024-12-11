@@ -1,4 +1,4 @@
-,CountryCode,CountryName
+﻿,CountryCode,CountryName
 0,AD,Andorra
 1,AE,United Arab Emirates (the)
 2,AF,Afghanistan
@@ -38,7 +38,7 @@
 36,CF,Central African Republic
 37,CG,Congo
 38,CH,Switzerland
-39,CI,Côte d'Ivoire
+39,CI,C√¥te d'Ivoire
 40,CK,Cook Islands
 41,CL,Chile
 42,CM,Cameroon
@@ -176,7 +176,7 @@
 174,PW,Palau
 175,PY,Paraguay
 176,QA,Qatar
-177,RE,Réunion
+177,RE,R√©union
 178,RO,Romania
 179,RU,Russian Federation (the)
 180,RW,Rwanda
@@ -210,7 +210,7 @@
 208,TN,Tunisia
 209,TO,Tonga
 210,TL,Timor-Leste
-211,TR,Türkiye
+211,TR,T√ºrkiye
 212,TT,Trinidad and Tobago
 213,TV,Tuvalu
 214,TW,Taiwan (Province of China)
@@ -241,10 +241,10 @@
 239,JE,Jersey
 240,GG,Guernsey
 241,IM,Isle of Man
-242,AX,Åland Islands
-243,CW,Curaçao
+242,AX,√Öland Islands
+243,CW,Cura√ßao
 244,BQ,"Bonaire, Sint Eustatius and Saba"
-245,BL,Saint Barthélemy
+245,BL,Saint Barth√©lemy
 246,MF,Saint Martin (French Part)
 247,SX,Sint Maarten (Dutch Part)
 248,SS,South Sudan
