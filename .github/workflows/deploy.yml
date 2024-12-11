@@ -1,4 +1,4 @@
-name: Deploy UNLOCODE Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,25 +6,30 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v3
       with:
-        python-version: 3.9
+        python-version: '3.x'
 
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         pip install pandas
 
-    - name: Generate Pages
+    - name: Run page generation script
+      run: python scripts/generate_pages.py
+
+    - name: Stage and commit changes
       run: |
-        python scripts/generate_pages.py
+        git add docs/*
+        git commit -m "Add generated pages"
+        git push
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
