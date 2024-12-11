@@ -50,6 +50,19 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
     f.write("<h1>UNLOCODE Directory</h1>")
     f.write("<ul>")
 
+    # Ensure 'Country' column is treated as strings
+    unlocode_df["Country"] = unlocode_df["Country"].astype(str)
+
+    # Replace NaN or invalid values with an empty string (or any default value)
+    unlocode_df["Country"] = unlocode_df["Country"].fillna("")
+
+    # Filter out empty strings or invalid country codes
+    country_codes = [code for code in unlocode_df["Country"].unique() if code.strip()]
+
+    # Sort the country codes
+    for country_code in sorted(country_codes):
+        # Generate pages for each country as before
+        print(f"Processing country: {country_code}")
     for country_code in sorted(unlocode_df["Country"].unique()):
         country_file = f"{country_code}.html"
         f.write(f'<li><a href="unlocode/{country_file}">{country_code}</a></li>')
