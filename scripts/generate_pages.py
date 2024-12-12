@@ -75,6 +75,38 @@ unlocode_df = unlocode_df.applymap(
 # Drop 'change' column
 unlocode_df = unlocode_df.drop(columns=["change"], errors="ignore")
 
+# Generate Home Page
+with open(os.path.join(output_dir, "index.html"), "w") as f:
+    f.write(header_template.format(title="UNLOCODE Directory"))
+    f.write("<h1>UNLOCODE Directory</h1>")
+    f.write("<ul>")
+    f.write('<li><a href="countries.html">Country Codes</a></li>')
+    f.write('<li><a href="subdivisions.html">Subdivision Codes</a></li>')
+    f.write('<li><a href="unlocode-directory.html">UNLOCODE Directory</a></li>')
+    f.write("</ul>")
+    f.write(footer_template)
+
+# Generate Country Codes Page
+with open(os.path.join(output_dir, "countries.html"), "w") as f:
+    f.write(header_template.format(title="Country Codes"))
+    f.write("<h1>Country Codes</h1>")
+    f.write(country_df.to_html(index=False))
+    f.write(footer_template)
+
+# Generate Subdivision Codes Page
+with open(os.path.join(output_dir, "subdivisions.html"), "w") as f:
+    f.write(header_template.format(title="Subdivision Codes"))
+    f.write("<h1>Subdivision Codes</h1>")
+    subdivision_df_cleaned = subdivision_df.dropna(subset=["Country Code", "Subdivision Code", "Subdivision Name", "Subdivision Type"])
+    subdivision_df_cleaned = subdivision_df_cleaned.rename(columns={
+        'Country Code': 'Country Code',
+        'Subdivision Code': 'Sub Division Code',
+        'Subdivision Name': 'Sub Division Name',
+        'Subdivision Type': 'Sub Division Type'
+    })
+    f.write(subdivision_df_cleaned.to_html(index=False))
+    f.write(footer_template)
+
 # Generate UNLOCODE Directory Page
 unlocode_output_dir = os.path.join(output_dir, "unlocode")
 os.makedirs(unlocode_output_dir, exist_ok=True)
