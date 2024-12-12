@@ -165,12 +165,4 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
 
             # Convert country code column to a link pointing to the country-specific page
             country_data["Country"] = country_data["Country"].apply(
-                lambda code: f'<a href="https://uncefact.github.io/tools-methods/unlocode/{code}.html">{code}</a>'
-                if pd.notna(code) else code
-            )
-
-    cf.write(country_data.to_html(index=False, escape=False, classes="unlocode-table"))
-    cf.write(footer_template)
-
-    f.write("</ul>")
-    f.write(footer_template)
+                lambda code: f'<a href="https://uncefact.github.io/tools
