@@ -53,6 +53,17 @@ footer_template = """
 </html>
 """
 
+# Clean up the 'Date' column: Ensure proper date format and handle non-numeric values
+def clean_date(x):
+    try:
+        # Attempt to convert to integer if it's a numeric value
+        return str(int(float(x))) if pd.notna(x) else ''
+    except ValueError:
+        # If conversion fails, return empty string
+        return ''
+
+unlocode_df['Date'] = unlocode_df['Date'].apply(clean_date)
+
 # Clean up the UNLOCODE DataFrame
 unlocode_df = unlocode_df.fillna(' ')  # Replace NaN values with empty space
 
@@ -63,9 +74,6 @@ unlocode_df = unlocode_df.applymap(
 
 # Drop 'change' column
 unlocode_df = unlocode_df.drop(columns=["change"], errors="ignore")
-
-# Ensure the Date column has proper formatting
-unlocode_df['Date'] = unlocode_df['Date'].apply(lambda x: f"{int(x)}" if pd.notna(x) else '')  # Remove decimals
 
 # Generate UNLOCODE Directory Page
 unlocode_output_dir = os.path.join(output_dir, "unlocode")
