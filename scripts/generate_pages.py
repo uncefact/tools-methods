@@ -67,7 +67,16 @@ with open(os.path.join(output_dir, "index.html"), "w") as f:
 with open(os.path.join(output_dir, "countries.html"), "w") as f:
     f.write(header_template.format(title="Country Codes"))
     f.write("<h2>Country Codes</h2>")
-    f.write(country_df.to_html(index=False, classes="unlocode-table"))
+
+    # Add links to the country code column
+    country_df["Country"] = country_df["Country"].apply(
+        lambda code: f'<a href="https://uncefact.github.io/tools-methods/unlocode/{code}.html">{code}</a>' if pd.notna(code) else code
+    )
+
+    # Convert the dataframe to HTML with links
+    f.write(
+        country_df.to_html(index=False, escape=False, classes="unlocode-table")  # escape=False to allow HTML in cells
+    )
     f.write(footer_template)
 
 # Generate Subdivision Codes Page
