@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import unicodedata
 
 # Paths to CSV files
 source_dir = "source-files/UNLOCODE"
@@ -78,6 +79,17 @@ with open(os.path.join(output_dir, "countries.html"), "w") as f:
         country_df.to_html(index=False, escape=False, classes="unlocode-table")  # escape=False to allow HTML in cells
     )
     f.write(footer_template)
+
+# Clean up the Subdivision DataFrame
+subdivision_df = subdivision_df.dropna()  # Remove rows with NaN values
+
+# Rename columns for clearer headers
+subdivision_df.columns = ["Country Code", "Sub Division Code", "Sub Division Name", "Sub Division Type"]
+
+# Normalize text to handle diacritics and unusual characters
+subdivision_df = subdivision_df.applymap(
+    lambda x: unicodedata.normalize("NFKC", str(x)) if isinstance(x, str) else x
+)
 
 # Generate Subdivision Codes Page
 with open(os.path.join(output_dir, "subdivisions.html"), "w") as f:
