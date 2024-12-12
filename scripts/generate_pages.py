@@ -33,7 +33,7 @@ header_template = """
     <div id="header">
         <div class="logo">
             <a href="https://www.unece.org">
-                <img src="https://vocabulary.uncefact.org/images/unlogo.png" alt="UN Logo">
+                <img src="https://vocabulary.uncefact.org/images/logo.png" alt="UN Logo">
             </a>
         </div>
         <h1>United Nations Code for Trade and Transport Locations (UN/LOCODE)</h1>
@@ -72,8 +72,11 @@ unlocode_df = unlocode_df.applymap(
     lambda x: unicodedata.normalize("NFKC", str(x)) if isinstance(x, str) else x
 )
 
-# Drop 'change' column
+# Drop 'change' column if it exists
 unlocode_df = unlocode_df.drop(columns=["change"], errors="ignore")
+
+# Filter out rows where the 'Location' is missing (i.e., they have a Country code but no location)
+unlocode_df = unlocode_df[unlocode_df['Location'].notna()]
 
 # Generate Home Page
 with open(os.path.join(output_dir, "index.html"), "w") as f:
@@ -97,14 +100,26 @@ with open(os.path.join(output_dir, "countries.html"), "w") as f:
 with open(os.path.join(output_dir, "subdivisions.html"), "w") as f:
     f.write(header_template.format(title="Subdivision Codes"))
     f.write("<h1>Subdivision Codes</h1>")
-    subdivision_df_cleaned = subdivision_df.dropna(subset=["Country Code", "Subdivision Code", "Subdivision Name", "Subdivision Type"])
-    subdivision_df_cleaned = subdivision_df_cleaned.rename(columns={
-        'Country Code': 'Country Code',
-        'Subdivision Code': 'Sub Division Code',
-        'Subdivision Name': 'Sub Division Name',
-        'Subdivision Type': 'Sub Division Type'
-    })
-    f.write(subdivision_df_cleaned.to_html(index=False))
+
+    # Check columns of subdivision_df
+    print(f"Columns in subdivision_df: {subdivision_df.columns.tolist()}")
+
+    # Clean the data, adjusting to actual column names
+    required_columns = ['Country Code', 'Subdivision Code', 'Subdivision Name', 'Subdivision Type']
+
+    # Remove rows where any of the required columns have missing values
+    if all(col in subdivision_df.columns for col in required_columns):
+        subdivision_df_cleaned = subdivision_df.dropna(subset=required_columns)
+        subdivision_df_cleaned = subdivision_df_cleaned.rename(columns={
+            'Country Code': 'Country Code',
+            'Subdivision Code': 'Sub Division Code',
+            'Subdivision Name': 'Sub Division Name',
+            'Subdivision Type': 'Sub Division Type'
+        })
+        f.write(subdivision_df_cleaned.to_html(index=False))
+    else:
+        f.write("<p>Error: Missing expected columns in the subdivision dataset.</p>")
+
     f.write(footer_template)
 
 # Generate UNLOCODE Directory Page
@@ -135,7 +150,8 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
         with open(os.path.join(unlocode_output_dir, country_file), "w") as cf:
             cf.write(header_template.format(title=f"{country_code} - UNLOCODE"))
             cf.write(f"<h2>{country_code} - UNLOCODE</h2>")
-            cf.write('<p><a href="https://uncefact.github.io/tools-methods/unlocode-directory.html">Back to UNLOCODE Directory</a></p>')
+            cf.write(
+                '<p><a href="https://uncefact.github.io/tools-methods/unlocode-directory.html">Back to UNLOCODE Directory</a></p>')
 
             # Convert country code column to a link pointing to the country-specific page
             country_data["Country"] = country_data["Country"].apply(
