@@ -99,6 +99,9 @@ with open(os.path.join(output_dir, "countries.html"), "w") as f:
     f.write(header_template.format(title="Country Codes"))
     f.write("<h1>Country Codes</h1>")
 
+    # Ensure CountryCode is treated as a string and handle NaNs
+    country_df["CountryCode"] = country_df["CountryCode"].fillna("").astype(str)
+
     # Loop through the country codes and generate the links to UNLOCODE country pages
     for country_code in sorted(country_df["CountryCode"].unique()):
         country_file = f"{country_code}.html"
