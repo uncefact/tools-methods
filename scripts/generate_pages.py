@@ -100,7 +100,7 @@ with open(os.path.join(output_dir, "countries.html"), "w") as f:
     f.write("<h1>Country Codes</h1>")
 
     # Loop through the country codes and generate the links to UNLOCODE country pages
-    for country_code in sorted(country_df["Country Code"].unique()):
+    for country_code in sorted(country_df["CountryCode"].unique()):
         country_file = f"{country_code}.html"
         # Update the link to point to the correct location in the UNLOCODE directory
         f.write(f'<li><a href="https://uncefact.github.io/tools-methods/unlocode/{country_code}.html">{country_code}</a></li>')
