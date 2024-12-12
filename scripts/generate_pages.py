@@ -159,8 +159,12 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
                 if pd.notna(code) else code
             )
 
-            country_data["Location"] = country_data["Location"].apply(
-                lambda code: f'<a href="https://unlocode.info/{code}">{code}</a>'
+            # Combine 'Country' and 'Location' for the URL
+            unlocode = country_data["Country"] + country_data["Location"]
+
+            # Apply the lambda to create a link using the combined country code and location code
+            country_data["Location"] = unlocode.apply(
+                lambda code: f'<a href="https://unlocode.info/{code}">{code.split("-")[-1]}</a>'
                 if pd.notna(code) else code
             )
 
