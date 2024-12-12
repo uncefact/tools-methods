@@ -169,8 +169,8 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
                 if pd.notna(code) else code
             )
 
-        cf.write(country_data.to_html(index=False, escape=False, classes="unlocode-table"))
-        cf.write(footer_template)
+    cf.write(country_data.to_html(index=False, escape=False, classes="unlocode-table"))
+    cf.write(footer_template)
 
     f.write("</ul>")
     f.write(footer_template)
