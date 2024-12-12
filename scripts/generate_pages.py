@@ -53,50 +53,19 @@ footer_template = """
 </html>
 """
 
-# Generate Home Page
-with open(os.path.join(output_dir, "index.html"), "w") as f:
-    f.write(header_template.format(title="UN/LOCODE Directory"))
-    f.write("<h2>Welcome to the UN/LOCODE Directory</h2>")
-    f.write("<ul>")
-    f.write('<li><a href="countries.html">Country Codes</a></li>')
-    f.write('<li><a href="subdivisions.html">Subdivision Codes</a></li>')
-    f.write('<li><a href="unlocode-directory.html">UNLOCODE Directory</a></li>')
-    f.write("</ul>")
-    f.write(footer_template)
-
-# Generate Country Codes Page
-with open(os.path.join(output_dir, "countries.html"), "w") as f:
-    f.write(header_template.format(title="Country Codes"))
-    f.write("<h2>Country Codes</h2>")
-
-    # Add links to the country code column
-    country_df["Country"] = country_df["Country"].apply(
-        lambda code: f'<a href="https://uncefact.github.io/tools-methods/unlocode/{code}.html">{code}</a>' if pd.notna(code) else code
-    )
-
-    # Convert the dataframe to HTML with links
-    f.write(
-        country_df.to_html(index=False, escape=False, classes="unlocode-table")  # escape=False to allow HTML in cells
-    )
-    f.write(footer_template)
-
-# Clean up the Subdivision DataFrame
-subdivision_df = subdivision_df.dropna()  # Remove rows with NaN values
-
-# Rename columns for clearer headers
-subdivision_df.columns = ["Country Code", "Sub Division Code", "Sub Division Name", "Sub Division Type"]
+# Clean up the UNLOCODE DataFrame
+unlocode_df = unlocode_df.fillna(' ')  # Replace NaN values with empty space
 
 # Normalize text to handle diacritics and unusual characters
-subdivision_df = subdivision_df.applymap(
+unlocode_df = unlocode_df.applymap(
     lambda x: unicodedata.normalize("NFKC", str(x)) if isinstance(x, str) else x
 )
 
-# Generate Subdivision Codes Page
-with open(os.path.join(output_dir, "subdivisions.html"), "w") as f:
-    f.write(header_template.format(title="Subdivision Codes"))
-    f.write("<h2>Subdivision Codes</h2>")
-    f.write(subdivision_df.to_html(index=False, classes="unlocode-table"))
-    f.write(footer_template)
+# Drop 'change' column
+unlocode_df = unlocode_df.drop(columns=["change"], errors="ignore")
+
+# Ensure the Date column has proper formatting
+unlocode_df['Date'] = unlocode_df['Date'].apply(lambda x: f"{int(x)}" if pd.notna(x) else '')  # Remove decimals
 
 # Generate UNLOCODE Directory Page
 unlocode_output_dir = os.path.join(output_dir, "unlocode")
@@ -127,7 +96,14 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
             cf.write(header_template.format(title=f"{country_code} - UNLOCODE"))
             cf.write(f"<h2>{country_code} - UNLOCODE</h2>")
             cf.write('<p><a href="https://uncefact.github.io/tools-methods/unlocode-directory.html">Back to UNLOCODE Directory</a></p>')
-            cf.write(country_data.to_html(index=False, classes="unlocode-table"))
+
+            # Convert country code column to a link pointing to the country-specific page
+            country_data["Country"] = country_data["Country"].apply(
+                lambda code: f'<a href="https://uncefact.github.io/tools-methods/unlocode/{code}.html">{code}</a>'
+                if pd.notna(code) else code
+            )
+
+            cf.write(country_data.to_html(index=False, escape=False, classes="unlocode-table"))
             cf.write(footer_template)
 
     f.write("</ul>")
