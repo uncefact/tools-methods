@@ -82,6 +82,14 @@ unlocode_df = unlocode_df[unlocode_df['Location'].notna()]
 with open(os.path.join(output_dir, "index.html"), "w") as f:
     f.write(header_template.format(title="UNLOCODE Directory"))
     f.write("<h1>UNLOCODE Directory</h1>")
+    f.write("The United Nations Code for Trade and Transport Locations is commonly more known as UN/LOCODE. Although managed and maintained by the UNECE, it is the product of a wide collaboration in the framework of the joint trade facilitation effort undertaken within the United Nations.")
+    f.write("Initiated within the UNECE Working Party on Trade Facilitation, UN/LOCODE is based on a code structure set up by UN/ECLAC and a list of locations originating in UN/ESCAP, developed in UNCTAD in co-operation with transport organisations like IATA and the ICS and with active contributions from national governments and commercial bodies. Its first issue in 1981 provided codes to represent the names of some 8.000 locations in the world.")
+    f.write("Currently, UN/LOCODE includes over 103,034 locations in 249 countries and territories. It is used by most major shipping companies, by freight forwarders and in the manufacturing industry around the world. It is also applied by national governments and in trade related activities, such as statistics where it is used by the European Union, by the UPU for certain postal services, etc")
+    # Add the hyperlink for UNECE Recommendation No. 16 at the end
+    f.write('<p>If you are interested in the full text of the formal basis for UN/LOCODE, this can be consulted at ')
+    f.write(
+        '<a href="https://unece.org/trade/uncefact/unlocode/recommendation-16">UNECE Recommendation No. 16</a>.</p>')
+    f.write("The cut-off dates of UN/LOCODE releases are 31 March and 30 September.")
     f.write("<ul>")
     f.write('<li><a href="countries.html">Country Codes</a></li>')
     f.write('<li><a href="subdivisions.html">Subdivision Codes</a></li>')
@@ -158,16 +166,6 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
                 lambda code: f'<a href="https://uncefact.github.io/tools-methods/unlocode/{code}.html">{code}</a>'
                 if pd.notna(code) else code
             )
-
-            # Combine 'Country' and 'Location' for the URL
-            unlocode = country_data["Country"] + country_data["Location"]
-
-            # Apply the lambda to create a link using the combined country code and location code
-            country_data["Location"] = unlocode.apply(
-                lambda code: f'<a href="https://unlocode.info/{code}">{code.split("-")[-1]}</a>'
-                if pd.notna(code) else code
-            )
-
 
 
             cf.write(country_data.to_html(index=False, escape=False, classes="unlocode-table"))
