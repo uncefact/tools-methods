@@ -126,6 +126,7 @@ with open(os.path.join(output_dir, "unlocode-directory.html"), "w") as f:
         with open(os.path.join(unlocode_output_dir, country_file), "w") as cf:
             cf.write(header_template.format(title=f"{country_code} - UNLOCODE"))
             cf.write(f"<h2>{country_code} - UNLOCODE</h2>")
+            cf.write('<p><a href="https://uncefact.github.io/tools-methods/unlocode-directory.html">Back to UNLOCODE Directory</a></p>')
             cf.write(country_data.to_html(index=False, classes="unlocode-table"))
             cf.write(footer_template)
 
